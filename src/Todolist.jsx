@@ -7,10 +7,19 @@ export const Todolist = () => {
   function addActivity() {
     setlistData((listData) => {
       const updateList = [...listData, activity]
-      console.log(updateList);
+      // console.log(updateList);
       setActivity('');
       return updateList
     })
+  }
+  function editActivity(index) {
+    const newActivity = window.prompt("Edit activity:", listData[index]);
+    if (newActivity !== null && newActivity.trim() !== "") {
+      const updatedList = listData.map((item, i) =>
+        i === index ? newActivity : item
+      );
+      setlistData(updatedList); // Corrected from setListData to setlistData
+    }
   }
   function removeActivity(i) {
     const updateListData = listData.filter((elem, id) => {
@@ -45,8 +54,11 @@ export const Todolist = () => {
                         <p key={i}>
                           <div className="card-text m-3 py-1" style={{ backgroundColor:'#D3D3D3'}}>
                             <div className="row">
-                              <div className="col-md-10 px-4" style={{fontSize:'1.3rem'}}>{data}</div>
-                              <div className="col-md-2 text-end"><button className="btn btn-danger px-2 py-2 mx-1" style={{ fontSize: ' 0.8rem', borderRadius:'0px'}} onClick={() => removeActivity(i)}>Remove</button></div>
+                              <div className="col-md-8 px-4" style={{fontSize:'1.3rem'}}>{data}</div>
+                              <div className="col-md-4 text-end">
+                              <button className="btn btn-warning px-2 py-2 mx-1"style={{fontSize: "0.8rem",borderRadius: "0px",}}onClick={() => editActivity(i)}>Edit</button>
+                                <button className="btn btn-danger px-2 py-2 mx-1" style={{ fontSize: ' 0.8rem', borderRadius:'0px'}} onClick={() => removeActivity(i)}>Remove</button>
+                              </div>
                             </div>
                           </div>
                         </p>
